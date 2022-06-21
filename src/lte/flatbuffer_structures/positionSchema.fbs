@@ -1,0 +1,74 @@
+namespace SivertAPI.PosUpd;
+
+struct Vec3API {
+
+  x:float;
+  y:float;
+  z:float;
+  id:int;
+
+}
+
+struct EEBL {
+
+  triggered:bool = false; // Bool to initiate the EEBL scenario
+  VehID:int; // ID of the node triggered EEBL
+
+}
+
+table GSCMstruct {
+
+  UseGSCM:bool = false; // Bool to initiate the EEBL scenario
+  RSS:double;
+
+}
+
+struct VehInfo {
+
+  id:int;
+  timeStamp:float;
+
+}
+
+struct GscmInfo{
+
+  Tx:int;
+  Rx:int;
+  rss:double;
+
+}
+
+struct Channel{
+
+  TxID:int;
+  RxID:int;
+  ChannelIDinfo:int;
+
+}
+
+struct SpectrumValue{
+
+  ChannelID:int;
+  PSDGainCoefficient:double;
+  CoefInd:int;
+
+}
+
+
+table PosAPI {
+//  EEBL:bool = false;
+  GSCM:GSCMstruct; // GSCM channel parameters;
+  GSCMvector:[GscmInfo]; // Vector of GSCM links calculated in Unity3D
+  CITS:[EEBL];
+  pos:[Vec3API];     // Vector of structs.
+  Suppl:[VehInfo];   // Vector of structs.
+  terminateNS3:bool = false; // Bool to pass termination signal to NS3 from Unity3D onAppClose
+  GSCMSpectruChannels:[SpectrumValue]; // Vector of all spectrum values
+  SpectrumInfo:[Channel]; // Vector of information about GSCM channels
+  NumberOfFrequnciesPerChannel:int; // Dimension to iterate over GSCMSpectruChannels
+  V2Xstack:string;
+}
+
+
+
+root_type PosAPI;
